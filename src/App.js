@@ -1,8 +1,12 @@
 import React from 'react';
+import ImageCatcher from './modules/imageCatcher';
 
 function App() {
-  const value = 'World';
-  return <div>Hello {value}</div>;
+  return (
+    <React.Fragment>
+      <ImageCatcher />
+    </React.Fragment>
+  )
 }
 
 export default App;
