@@ -6,19 +6,12 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@azure-rest/ai-vision-image-analysis": "^1.0.0-beta.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "os-browserify": "^0.3.0",
-    "path": "^0.12.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "^5.0.1",
-    "save-dev": "^0.0.1-security"
-  },
-  "devDependencies": {
-    "@babel/plugin-transform-private-property-in-object": "^7.23.4"
+    "react-scripts": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
