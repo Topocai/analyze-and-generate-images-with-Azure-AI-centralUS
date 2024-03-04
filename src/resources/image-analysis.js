@@ -5,8 +5,8 @@ const { AzureKeyCredential } = require('@azure/core-auth');
 //const endpoint = process.env.REACT_APP_VISION_ENDPOINT || process.env.VISION_ENDPOINT;
 //const key = process.env.REACT_APP_VISION_KEY || process.env.VISION_KEY;
 
-const credential = new AzureKeyCredential(key);
-const client = createClient(endpoint, credential);
+const credential = new AzureKeyCredential("16d7192893ce4bd78037b3cb2cd55a36");
+const client = createClient("https://cvai-topocai.cognitiveservices.azure.com/", credential);
 
 const features = [
   'Caption',
