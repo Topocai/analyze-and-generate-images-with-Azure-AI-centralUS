@@ -2,11 +2,8 @@ const { ImageAnalysisClient } = require('@azure-rest/ai-vision-image-analysis');
 const createClient = require('@azure-rest/ai-vision-image-analysis').default;
 const { AzureKeyCredential } = require('@azure/core-auth');
 
-// Load the .env file if it exists
-require("dotenv").config();
-
-const endpoint = process.env.VISION_ENDPOINT;
-const key = process.env.VISION_KEY;
+const endpoint = process.env.REACT_APP_VISION_ENDPOINT || process.env.VISION_ENDPOINT;
+const key = process.env.REACT_APP_VISION_KEY || process.env.VISION_KEY;
 
 const credential = new AzureKeyCredential(key);
 const client = createClient(endpoint, credential);
