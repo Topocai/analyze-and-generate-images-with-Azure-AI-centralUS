@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { analyzeImageFromUrl } from '../resources/image-analysis';
 
 const ImageCatcher = () => {
     const [inputText, setInputText] = useState('');
@@ -7,22 +8,21 @@ const ImageCatcher = () => {
         setInputText(event.target.value);
     };
 
-    const handleButton1Click = () => {
-        // Function to execute when Button 1 is clicked
-        console.log('Button 1 clicked with input:', inputText);
-    };
-
-    const handleButton2Click = () => {
-        // Function to execute when Button 2 is clicked
-        console.log('Button 2 clicked with input:', inputText);
+    const handleButton = async (buttonType) => {
+        if (buttonType === 'analize') {
+            const response = await analyzeImageFromUrl(inputText);
+            console.log(response)
+        } else if(buttonType === 'generate'){
+            console.log('Button 2 clicked');
+        }
     };
 
     return (
         <div>
             <h1>Image Catcher</h1>
             <input type="text" value={inputText} onChange={handleInputChange} placeholder='Put an image url'/>
-            <button onClick={handleButton1Click}>Button 1</button>
-            <button onClick={handleButton2Click}>Button 2</button>
+            <button onClick={() => handleButton("analize")}>Analyze</button>
+            <button onClick={() => handleButton("generate")}>Generate</button>
         </div>
     );
 };
