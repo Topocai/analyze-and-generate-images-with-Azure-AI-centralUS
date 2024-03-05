@@ -1,11 +1,12 @@
+const { ImageAnalysisClient } = require('@azure-rest/ai-vision-image-analysis');
 const createClient = require('@azure-rest/ai-vision-image-analysis').default;
 const { AzureKeyCredential } = require('@azure/core-auth');
 
-const endpoint = process.env.REACT_APP_VISION_ENDPOINT || process.env.REACT_APP_ENV.VISION_ENDPOINT;
-const key = process.env.REACT_APP_VISION_KEY || process.env.REACT_APP_ENV.VISION_KEY;
+const endpoint = process.env.REACT_APP_VISION_ENDPOINT;
+const key = process.env.REACT_APP_VISION_KEY;
 
 const credential = new AzureKeyCredential(key);
-const client = new createClient(endpoint, { credential });
+const client = createClient(endpoint, credential);
 
 const features = [
   'Caption',
@@ -13,10 +14,9 @@ const features = [
 ];
 
 export async function analyzeImageFromUrl(imageUrl) {
-  console.log("Analyzing image from URL " + imageUrl);
   const result = await client.path('/imageanalysis:analyze').post({
     body: {
-        body: imageUrl
+        url: imageUrl
     },
     queryParameters: {
         features: features
@@ -33,3 +33,5 @@ export async function analyzeImageFromUrl(imageUrl) {
     iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
   }
 }
+
+analyzeImageFromUrl();
