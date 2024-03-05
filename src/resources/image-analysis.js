@@ -5,7 +5,7 @@ const endpoint = process.env.REACT_APP_VISION_ENDPOINT || process.env.REACT_APP_
 const key = process.env.REACT_APP_VISION_KEY || process.env.REACT_APP_ENV.VISION_KEY;
 
 const credential = new AzureKeyCredential(key);
-const client = createClient(endpoint, credential);
+const client = new createClient(endpoint, { credential });
 
 const features = [
   'Caption',
@@ -16,7 +16,7 @@ export async function analyzeImageFromUrl(imageUrl) {
   console.log("Analyzing image from URL " + imageUrl);
   const result = await client.path('/imageanalysis:analyze').post({
     body: {
-        url: imageUrl
+        body: imageUrl
     },
     queryParameters: {
         features: features
