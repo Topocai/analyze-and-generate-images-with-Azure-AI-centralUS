@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-
+oldImageAnalysis.js
 # production
 /build
 
