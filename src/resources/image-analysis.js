@@ -33,5 +33,3 @@ export async function analyzeImageFromUrl(imageUrl) {
     iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
   }
 }
-
-analyzeImageFromUrl();
