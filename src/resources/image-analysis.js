@@ -1,3 +1,4 @@
+const { ImageAnalysisClient } = require('@azure-rest/ai-vision-image-analysis');
 const createClient = require('@azure-rest/ai-vision-image-analysis').default;
 const { AzureKeyCredential } = require('@azure/core-auth');
 
@@ -32,3 +33,5 @@ export async function analyzeImageFromUrl(imageUrl) {
     iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
   }
 }
+
+analyzeImageFromUrl();
