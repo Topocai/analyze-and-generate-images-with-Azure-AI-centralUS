@@ -27,6 +27,7 @@ export async function analyzeImageFromUrl(imageUrl) {
 
   if (iaResult.captionResult) {
     console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
+    return iaResult.captionResult.text;
   }
   if (iaResult.readResult) {
     iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
