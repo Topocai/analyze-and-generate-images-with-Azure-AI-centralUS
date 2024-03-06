@@ -1,16 +1,34 @@
-import { ComputerVisionClient } from '@azure/cognitiveservices-computervision';
-import { ApiKeyCredentials } from '@azure/ms-rest-js';
+const createClient = require('@azure-rest/ai-vision-image-analysis').default;
+const { AzureKeyCredential } = require('@azure/core-auth');
 
-const apiKey = process.env.REACT_APP_VISION_KEY || process.env.REACT_APP_ENV.VISION_KEY;
 const endpoint = process.env.REACT_APP_VISION_ENDPOINT || process.env.REACT_APP_ENV.VISION_ENDPOINT;
+const key = process.env.REACT_APP_VISION_KEY || process.env.REACT_APP_ENV.VISION_KEY;
 
-const visualFeatures = ["ImageType","Faces","Adult","Categories","Color","Tags","Description","Objects","Brands"];
+const credential = new AzureKeyCredential(key);
+const client = createClient(endpoint, credential);
 
-export async function analyzeImageFromUrl(imageUrl) {  
-  const client = new ComputerVisionClient(
-    new ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': apiKey } }), endpoint)
+const features = [
+  'Caption',
+  'Read'
+];
 
-    const analysis = await client.analyzeImage(imageUrl, { visualFeatures, modelVersion: "latest"});
+export async function analyzeImageFromUrl(imageUrl) {
+  const result = await client.path('/imageanalysis:analyze').post({
+    body: {
+        url: imageUrl
+    },
+    queryParameters: {
+        features: features
+    },
+    contentType: 'application/json'
+  });
 
-    return { "URL": imageUrl, ...analysis};
+  const iaResult = result.body;
+
+  if (iaResult.captionResult) {
+    console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
   }
+  if (iaResult.readResult) {
+    iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
+  }
+}
