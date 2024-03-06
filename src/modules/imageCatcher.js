@@ -21,6 +21,7 @@ const ImageCatcher = () => {
     return (
         <div>
             <h1>Image Catcher</h1>
+            <img src={inputText} alt='Your image'></img>
             <input type="text" value={inputText} onChange={handleInputChange} placeholder='Put an image url'/>
             <button onClick={() => handleButton("analize")}>Analyze</button>
             <button onClick={() => handleButton("generate")}>Generate</button>
