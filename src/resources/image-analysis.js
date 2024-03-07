@@ -13,7 +13,7 @@ const features = [
 ];
 
 export async function analyzeImageFromUrl(imageUrl) {
-  const result = await client.path('/imageanalysis:analyze').post({
+   const response = await client.path('/imageanalysis:analyze').post({
     body: {
         url: imageUrl
     },
@@ -21,15 +21,17 @@ export async function analyzeImageFromUrl(imageUrl) {
         features: features
     },
     contentType: 'application/json'
+  }).then((response) => {
+
+    const iaResult = response.body;
+    if (iaResult.captionResult) {
+      console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
+      return iaResult.captionResult.text;
+    }
+    if (iaResult.readResult) {
+      iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
+    }
   });
 
-  const iaResult = result.body;
-
-  if (iaResult.captionResult) {
-    console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
-    return iaResult.captionResult.text;
-  }
-  if (iaResult.readResult) {
-    iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
-  }
+  return response
 }
