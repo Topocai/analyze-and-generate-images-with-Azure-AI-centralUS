@@ -31,16 +31,15 @@ export default function AnalysisElement() {
         setCaption(captionGetted)
 
         image.animate([ {scale: 0, opacity: 0}, {scale: 0.5, opacity: 0.5}, {scale: 1, opacity: 1} ], {duration: 1000, iterations: 1, fill: 'forwards', easing: 'ease-in-out'});
-        setButtonContent("Analyze!");
+        setButtonContent('Analyze!');
     }
     return (
         <section className='selectors image-analysis-selector'>
           <h2>Image analysis</h2>
-          
           <span>Analyse an image an returns a caption!</span>
           <div className='analysis-inputs'>
             <img src={imageUrl} alt='' id='user-image'></img>
-            <div>
+            <div className='caption-container'>
               <span>{caption}</span>
             </div>
             <input type='text' placeholder='Put an image url' id='analysis-url' required></input>
