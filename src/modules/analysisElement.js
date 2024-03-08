@@ -22,7 +22,6 @@ export default function AnalysisElement() {
         const inputUrl = inputElement.value;
 
         const image = document.getElementById('user-image');
-        const span = document.querySelector('.analysis-inputs span');
 
         setButtonContent(<LoadingElement />);
         
