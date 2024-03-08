@@ -13,7 +13,7 @@
     border-radius: 10px;
 }
 
-.analysis-inputs div {
+.caption-container {
     width: 100%;
     height: 100%;
     grid-column: 2 / -1;
@@ -83,8 +83,7 @@
     align-items: center;
 
     transition:
-        background 0.3s ease-in-out,
-        box-shadow 0.3s ease;
+        background 0.3s ease-in-out;
 }
 
 .analysis-inputs button:hover {
@@ -98,13 +97,13 @@
     justify-content: center;
     gap: 4px;
     height: 70%;
-    width: 70%; 
+    width: 70%;
 }
 
 .loading-element-circle {
-    background: #520aa5;
     aspect-ratio: 1/1;
-    border-radius: 50%;
+    background: rgb(99, 89, 122);
+    border-radius: 100%;
 
     animation: loader 1s infinite alternate;
 }
