@@ -19,7 +19,8 @@ const ImageCatcher = () => {
     };
 
     return (
-        <div>
+        <article>
+            <div>
             <h1>Image Catcher</h1>
             <img src={inputText} alt=''></img>
             <input type="text" value={inputText} onChange={handleInputChange} placeholder='Put an image url'/>
@@ -29,6 +30,8 @@ const ImageCatcher = () => {
                 <span>{analysisCaption}</span>
             </article>
         </div>
+        </article>
+        
     );
 };
 

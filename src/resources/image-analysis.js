@@ -24,6 +24,7 @@ export async function analyzeImageFromUrl(imageUrl) {
   }).then((response) => {
 
     const iaResult = response.body;
+    console.log(iaResult)
     if (iaResult.captionResult) {
       console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
       return iaResult.captionResult.text;

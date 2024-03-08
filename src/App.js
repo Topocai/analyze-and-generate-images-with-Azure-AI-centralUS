@@ -1,11 +1,20 @@
 import React from 'react';
-import ImageCatcher from './modules/imageCatcher';
+import './index.css'
+import AnalysisElement from './modules/analysisElement';
+import { ParticlesBackground } from './modules/particlesBackground';
 
 function App() {
   return (
-    <React.Fragment>
-      <ImageCatcher />
-    </React.Fragment>
+    <>
+    <ParticlesBackground />
+      <main>
+        
+        <h1>Image analysis and generator by Topocai</h1>
+        <div className='selector-handler'>
+          <AnalysisElement />  
+        </div> 
+      </main>
+    </>
   )
 }
 
