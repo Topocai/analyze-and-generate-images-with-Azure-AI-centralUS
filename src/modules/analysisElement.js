@@ -12,16 +12,42 @@ const LoadingElement = () => {
   )
 }
 
+const checkUrl = (url) => {
+    const img = new Image();
+    img.src = url;
+    return new Promise((resolve) => {
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+    });
+}
+
 export default function AnalysisElement() {
     const [imageUrl, setImageUrl] = useState('https://via.placeholder.com/250');
     const [caption, setCaption] = useState('Results would be here');
     const [buttonContent, setButtonContent] = useState('Analyze!');
 
     const handleButton = async () => {
-        const inputElement = document.getElementById('analysis-url');
-        const inputUrl = inputElement.value;
+        const inputUrl = document.getElementById('analysis-url').value;
+        const pulserElement = document.getElementById('url-pulser');
 
-        const image = document.getElementById('user-image');
+        if(inputUrl.trim() === '') {
+          setCaption('Please, put an image url to analyze.');
+          setImageUrl('https://via.placeholder.com/512');
+          pulserElement.classList.add('url-pulser-animation');
+          return;
+        }
+
+        checkUrl(inputUrl).then((result) => {
+          if(!result) {
+            setCaption('I can\'t reach the image, please check the url and try again.');
+            setImageUrl('https://via.placeholder.com/512');
+            pulserElement.classList.add('url-pulser-animation');
+            return;
+          }    
+        });
+
+        pulserElement.classList.remove('url-pulser-animation');
+        const image = document.getElementsByClassName('analyzed-image')[0];
 
         setButtonContent(<LoadingElement />);
         
@@ -30,19 +56,24 @@ export default function AnalysisElement() {
         setImageUrl(inputUrl);
         setCaption(captionGetted)
 
-        image.animate([ {scale: 0, opacity: 0}, {scale: 0.5, opacity: 0.5}, {scale: 1, opacity: 1} ], {duration: 1000, iterations: 1, fill: 'forwards', easing: 'ease-in-out'});
+        image.classList.add('image-spawn');
         setButtonContent('Analyze!');
+        setTimeout(() => {
+          image.classList.remove('image-spawn');
+        }, 1200);
     }
     return (
         <section className='selectors image-analysis-selector'>
           <h2>Image analysis</h2>
           <span>Analyse an image an returns a caption!</span>
           <div className='analysis-inputs'>
-            <img src={imageUrl} alt='' id='user-image'></img>
+            <img src={imageUrl} alt='' className='analyzed-image'></img>
             <div className='caption-container'>
               <span>{caption}</span>
             </div>
-            <input type='text' placeholder='Put an image url' id='analysis-url' required></input>
+            <div id='url-pulser'>
+              <input type='text' placeholder='Put an image url' id='analysis-url' required></input>
+            </div>
             <button onClick={handleButton}>{buttonContent}</button>
           </div>
         </section>

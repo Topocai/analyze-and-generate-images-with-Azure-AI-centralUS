@@ -5,9 +5,10 @@ import AnalysisElement from './modules/analysisElement';
 function App() {
   return (
     <>
-      <main>
-        
+      <header>
         <h1>Image analysis and generator by Topocai</h1>
+      </header>
+      <main>
         <div className='selector-handler'>
           <AnalysisElement />  
         </div> 
