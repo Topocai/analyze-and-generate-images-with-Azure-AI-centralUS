@@ -1,6 +1,8 @@
 import React from 'react';
-import './index.css'
+import './index.css';
+import './modules/styles/global-styles.css';
 import AnalysisElement from './modules/analysisElement';
+import GeneratorElement from './modules/generatorElement';
 
 function App() {
   return (
@@ -10,9 +12,10 @@ function App() {
       </header>
       <main>
         <div className='selector-handler'>
-          <AnalysisElement />  
+          <AnalysisElement />
+          <GeneratorElement />
         </div> 
-      </main>
+    </main>
     </>
   )
 }

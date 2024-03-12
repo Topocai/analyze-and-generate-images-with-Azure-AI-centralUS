@@ -1,3 +1,9 @@
+:root {
+    --analysis-main-color: #271547;
+    --analysis-shadow-main-color: #1d0dca17;
+    --analysis-inputs-main-color: #1e0c3dc4;
+}
+
 
 h1 {
     text-align: center;
@@ -23,7 +29,7 @@ main {
     align-items: center;
     text-align: center;
     min-height: 60vw;
-    min-width: 60vw;
+    min-width: 600px;
     max-width: 60vw;
     max-height: 60vw;
 }

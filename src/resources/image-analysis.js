@@ -12,8 +12,8 @@ const features = [
   'Read'
 ];
 
-export async function analyzeImageFromUrl(imageUrl) {
-   const response = await client.path('/imageanalysis:analyze').post({
+async function analyze(imageUrl) {
+  const response = await client.path('/imageanalysis:analyze').post({
     body: {
         url: imageUrl
     },
@@ -35,4 +35,18 @@ export async function analyzeImageFromUrl(imageUrl) {
   });
 
   return response
+}
+
+export async function analyzeImageFromUrl(imageUrl) {
+  const img = new Image();
+  img.src = imageUrl;
+
+  return new Promise((resolve, reject) => {
+    img.onload = async () => resolve(await analyze(imageUrl));
+    img.onerror = () => {
+      if (imageUrl.trim() === '') return reject(new Error('Please, put an image url in the box below the preview.'));
+      return reject(new Error('I can\'t reach the image, please check the url and try again.'));
+    };
+  });
+
 }
