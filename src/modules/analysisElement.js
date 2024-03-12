@@ -1,52 +1,37 @@
 import React, { useState } from 'react';
 import { analyzeImageFromUrl } from '../resources/image-analysis';
-import './analysis-element.css';
-const LoadingElement = () => {
-  return (
-    <div className='loading-element'>
-      <div className='loading-element-circle'></div>
-      <div className='loading-element-circle'></div>
-      <div className='loading-element-circle'></div>
-    </div>
-  )
-}
-
-const checkUrl = (url) => {
-    const img = new Image();
-    img.src = url;
-    return new Promise((resolve) => {
-      img.onload = () => resolve(true);
-      img.onerror = () => resolve(false);
-    });
-}
+import './styles/analysis-element.css';
+import LoadingElement from './loadingElement';
 
 const removeAnimations = (elements) => {
-  elements.forEach(element => {
-    if(element.classList.contains('caption-container')) {
+  elements.forEach(element => 
+  {
+    if(element.classList.contains('caption-container'))
       element.classList.remove('caption-container-spawn');
-    }
-    if(element.classList.contains('image-container')) {
+
+    if(element.classList.contains('image-container'))
       element.classList.remove('caption-container-spawn');
-    }
-    if(element.classList.contains('url-pulser')) {
+
+    if(element.classList.contains('url-pulser'))
       element.classList.remove('url-pulser-animation');
-    }
   });
 }
 
-const executeAnimations = (elements) => {
+const executeAnimations = (elements) => 
+{
   removeAnimations(elements);
-  setTimeout(() => {
-    elements.forEach(element => {
-      if(element.classList.contains('caption-container')) {
+  setTimeout(() => 
+  {
+    elements.forEach(element => 
+    {
+      if(element.classList.contains('caption-container'))
         element.classList.add('caption-container-spawn');
-      }
-      if(element.classList.contains('image-container')) {
+
+      if(element.classList.contains('image-container'))
         element.classList.add('image-spawn');
-      }
-      if(element.classList.contains('url-pulser')) {
+
+      if(element.classList.contains('url-pulser')) 
         element.classList.add('url-pulser-animation');
-      }
     });
   }, 1);
     
@@ -56,14 +41,16 @@ export default function AnalysisElement() {
     const [caption, setCaption] = useState('Results would be here');
     const [buttonContent, setButtonContent] = useState('Analyze!');
 
-    const handleButton = async () => {
+    async function handleButton() 
+    { 
         const inputUrl = document.getElementById('analysis-url').value;
-        const image = document.getElementById('image-container-id');
+        const image = document.getElementById('analysis-image-id');
 
         const captionContainer = document.getElementsByClassName('caption-container')[0];
         const pulserElement = document.getElementsByClassName('url-pulser')[0];
-        
-        function errorDisplay(message = "I can't reach the image, please check the url and try again.") {
+  
+        function errorDisplay(message = "I can't reach the image, please check the url and try again.") 
+        {
           setCaption(message);
 
           image.style.backgroundImage = `url(https://via.placeholder.com/512)`;
@@ -72,44 +59,40 @@ export default function AnalysisElement() {
           executeAnimations([captionContainer, pulserElement]);
         }
 
-        if(inputUrl.trim() === '') {
-          errorDisplay('Please, put an image url to analyze!');
-          return;
-        }
+        setButtonContent(<LoadingElement />);
 
-        checkUrl(inputUrl).then( async (isImage) => {
-          if(isImage) 
-          {
-            setButtonContent(<LoadingElement />);
-            const captionGetted = await analyzeImageFromUrl(inputUrl);
+        analyzeImageFromUrl(inputUrl)
+        .then(async (captionGetted) => 
+        {
 
-            setCaption(captionGetted);
+          image.style.backgroundImage = `url(${inputUrl})`;
+          captionContainer.lastChild.style.animation = `caption-text 2s infinite alternate`;
 
-            image.style.backgroundImage = `url(${inputUrl})`;
-            captionContainer.lastChild.style.animation = `caption-text 2s infinite alternate`;
+          setCaption(captionGetted);
+          setButtonContent('Analyze!');
+          removeAnimations([captionContainer, pulserElement]);
+          await executeAnimations([captionContainer, image]);
+          
 
-            await executeAnimations([captionContainer, image]);
-            setButtonContent('Analyze!'); 
-          } 
-          else 
-          {
-            await errorDisplay();
-            return;
-          }
-        }).catch(() => console.log('Error'));     
+        }).catch(async (error) => {
+          errorDisplay(error.message);
+          setButtonContent('Analyze!');
+          await executeAnimations([captionContainer, image, pulserElement]);
+        });
     }
+
     return (
         <section className='selectors image-analysis-selector'>
           <h2>Image analysis</h2>
           <span>Analyse an image an returns a caption!</span>
           <div className='analysis-inputs'>
-            <div className='image-container' id='image-container-id'></div>           
-            <div className='caption-container'>
+            <div className='image-container analysis-bs-color analysis-b-color' id='analysis-image-id'></div>           
+            <div className='caption-container analysis-b-color'>
               <img src='/photo-svgrepo-com.svg' alt=''></img>
               <span>{caption}</span>
             </div>
             <div className='url-pulser'>
-              <input type='text' placeholder='Put an image url' id='analysis-url' required></input>
+              <input className='user-input' type='text' placeholder='Put an image url' id='analysis-url' required></input>
             </div>
             <button onClick={handleButton}>{buttonContent}</button>
           </div>
