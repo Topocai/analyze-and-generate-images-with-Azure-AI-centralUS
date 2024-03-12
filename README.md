@@ -1,5 +1,16 @@
-# React basic
+# Image Analysis and Generator with Azure by Topocai
 
-[Azure Static Web Apps](https://docs.microsoft.com/azure/static-web-apps/overview) allows you to easily build [React](https://reactjs.org/) apps in minutes. Use this repo with the [React quickstart](https://docs.microsoft.com/azure/static-web-apps/getting-started?tabs=react) to build and customize a new static site.
+This repository its a simple page with some styles and animations i use to practice and learn how to build React apps also, i use azure services for the web static and other functions
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Azure Static Web App
+> This repository its linked with Azure SWA services for provide him a host.
+
+## Azure Computer Vision
+> This app uses Azure CV services to analyze an image by URL and generate a caption for him.
+
+## OpenAI API
+> OpenAI API provides me to generate images by a prompt with the Dalle-2 model, but.
+
+> [!IMPORTANT]
+> This app never would be finished and its only a learn repository for me, also, the functions maybe (sure) can't work today.
